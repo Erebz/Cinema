@@ -48,6 +48,8 @@ public class FilmService {
         filmRepository.delete(film);
     }
 
+    @Modifying
+    @Transactional
     public boolean modifierFilm(FilmEntity film) {
         Optional<FilmEntity> _f = getbyId(film.getNoFilm());
         if(_f.isEmpty()) return false;
