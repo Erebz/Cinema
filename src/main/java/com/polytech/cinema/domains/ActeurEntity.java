@@ -1,6 +1,12 @@
 package com.polytech.cinema.domains;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.polytech.cinema.validations.ValidAjoutActeur;
+import com.polytech.cinema.validations.ValidAjoutFilm;
+import com.polytech.cinema.validations.ValidModifActeur;
+import com.polytech.cinema.validations.ValidModifFilm;
+import com.polytech.cinema.validations.ValidSuppressionActeur;
+import com.polytech.cinema.validations.ValidSuppressionFilm;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
@@ -24,10 +32,13 @@ public class ActeurEntity {
     private String prenAct;
     private Date dateNaiss;
     private Date dateDeces;
+    private String image;
     private Collection<PersonnageEntity> personnages;
 
     @Id
     @Column(name = "NoAct")
+    @Null(groups = ValidAjoutActeur.class)
+    @NotNull(groups = {ValidSuppressionActeur.class, ValidModifActeur.class})
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getNoAct() {
         return noAct;
@@ -38,39 +49,32 @@ public class ActeurEntity {
 
     @Basic
     @Column(name = "NomAct")
-    public String getNomAct() {
-        return nomAct;
-    }
-    public void setNomAct(String nomAct) {
-        this.nomAct = nomAct;
-    }
+    @NotNull(groups = {ValidAjoutActeur.class, ValidModifActeur.class})
+    public String getNomAct() { return nomAct; }
+    public void setNomAct(String nomAct) { this.nomAct = nomAct; }
 
     @Basic
     @Column(name = "PrenAct")
-    public String getPrenAct() {
-        return prenAct;
-    }
-    public void setPrenAct(String prenAct) {
-        this.prenAct = prenAct;
-    }
+    @NotNull(groups = {ValidAjoutActeur.class, ValidModifActeur.class})
+    public String getPrenAct() { return prenAct; }
+    public void setPrenAct(String prenAct) { this.prenAct = prenAct; }
 
     @Basic
     @Column(name = "DateNaiss")
-    public Date getDateNaiss() {
-        return dateNaiss;
-    }
-    public void setDateNaiss(Date dateNaiss) {
-        this.dateNaiss = dateNaiss;
-    }
+    @NotNull(groups = {ValidAjoutActeur.class, ValidModifActeur.class})
+    public Date getDateNaiss() { return dateNaiss; }
+    public void setDateNaiss(Date dateNaiss) { this.dateNaiss = dateNaiss; }
 
     @Basic
     @Column(name = "DateDeces")
-    public Date getDateDeces() {
-        return dateDeces;
-    }
-    public void setDateDeces(Date dateDeces) {
-        this.dateDeces = dateDeces;
-    }
+    public Date getDateDeces() { return dateDeces; }
+    public void setDateDeces(Date dateDeces) { this.dateDeces = dateDeces; }
+
+    @Basic
+    @Column(name = "image")
+    @NotNull(groups = {ValidAjoutActeur.class, ValidModifActeur.class})
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 
     @Override
     public boolean equals(Object o) {
@@ -87,10 +91,7 @@ public class ActeurEntity {
 
     @OneToMany(mappedBy = "acteur", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("acteur-perso")
-    public Collection<PersonnageEntity> getPersonnages() {
-        return personnages;
-    }
-    public void setPersonnages(Collection<PersonnageEntity> personnages) {
-        this.personnages = personnages;
-    }
+    @Null(groups = {ValidAjoutActeur.class, ValidModifActeur.class, ValidSuppressionActeur.class})
+    public Collection<PersonnageEntity> getPersonnages() { return personnages; }
+    public void setPersonnages(Collection<PersonnageEntity> personnages) { this.personnages = personnages; }
 }

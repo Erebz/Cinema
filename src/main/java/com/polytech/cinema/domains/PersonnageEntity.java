@@ -1,6 +1,9 @@
 package com.polytech.cinema.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.polytech.cinema.validations.ValidAjoutFilm;
+import com.polytech.cinema.validations.ValidAjoutPerso;
+import com.polytech.cinema.validations.ValidModifFilm;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Objects;
 
 @Entity
@@ -24,22 +29,16 @@ public class PersonnageEntity {
 
     @Id
     @Column(name = "NoPerso")
+    @Null(groups = ValidAjoutPerso.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getNoPerso() {
-        return noPerso;
-    }
-    public void setNoPerso(Integer noPerso) {
-        this.noPerso = noPerso;
-    }
+    public Integer getNoPerso() { return noPerso; }
+    public void setNoPerso(Integer noPerso) { this.noPerso = noPerso; }
 
     @Basic
+    @NotNull(groups = ValidAjoutPerso.class)
     @Column(name = "NomPers")
-    public String getNomPers() {
-        return nomPers;
-    }
-    public void setNomPers(String nomPers) {
-        this.nomPers = nomPers;
-    }
+    public String getNomPers() { return nomPers; }
+    public void setNomPers(String nomPers) { this.nomPers = nomPers; }
 
     @Override
     public boolean equals(Object o) {
@@ -55,22 +54,16 @@ public class PersonnageEntity {
     }
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @NotNull(groups = ValidAjoutPerso.class)
     @JoinColumn(name = "NoFilm", referencedColumnName = "NoFilm", nullable = false)
     @JsonBackReference("film-perso")
-    public FilmEntity getFilm() {
-        return film;
-    }
-    public void setFilm(FilmEntity film) {
-        this.film = film;
-    }
+    public FilmEntity getFilm() { return film; }
+    public void setFilm(FilmEntity film) { this.film = film; }
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @NotNull(groups = ValidAjoutPerso.class)
     @JoinColumn(name = "NoAct", referencedColumnName = "NoAct")
     @JsonBackReference("acteur-perso")
-    public ActeurEntity getActeur() {
-        return acteur;
-    }
-    public void setActeur(ActeurEntity acteur) {
-        this.acteur = acteur;
-    }
+    public ActeurEntity getActeur() { return acteur; }
+    public void setActeur(ActeurEntity acteur) { this.acteur = acteur; }
 }

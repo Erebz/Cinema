@@ -12,4 +12,5 @@ import java.util.List;
 public interface PersonnageRepository extends JpaRepository<PersonnageEntity, Integer> {
     public PersonnageEntity findByNoPerso(int noPerso);
     public List<PersonnageEntity> findAllByFilm(FilmEntity film);
+    public List<PersonnageEntity> findAllByActeur(ActeurEntity acteur);
 }

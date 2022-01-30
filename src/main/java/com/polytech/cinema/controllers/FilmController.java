@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @Validated
-@RequestMapping("/film")
+@RequestMapping("/films")
 public class FilmController {
 
     @Autowired

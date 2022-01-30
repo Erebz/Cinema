@@ -1,6 +1,12 @@
 package com.polytech.cinema.domains;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.polytech.cinema.validations.ValidAjoutFilm;
+import com.polytech.cinema.validations.ValidAjoutRealisateur;
+import com.polytech.cinema.validations.ValidModifFilm;
+import com.polytech.cinema.validations.ValidModifRealisateur;
+import com.polytech.cinema.validations.ValidSuppressionFilm;
+import com.polytech.cinema.validations.ValidSuppressionRealisateur;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -21,11 +29,14 @@ public class RealisateurEntity {
     private Integer noRea;
     private String nomRea;
     private String prenRea;
+    private String image;
     private Collection<FilmEntity> films;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NoRea")
+    @Null(groups = ValidAjoutRealisateur.class)
+    @NotNull(groups = {ValidSuppressionRealisateur.class, ValidModifRealisateur.class})
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getNoRea() {
         return noRea;
     }
@@ -35,6 +46,7 @@ public class RealisateurEntity {
 
     @Basic
     @Column(name = "NomRea")
+    @NotNull(groups = {ValidAjoutRealisateur.class, ValidModifRealisateur.class})
     public String getNomRea() {
         return nomRea;
     }
@@ -44,12 +56,19 @@ public class RealisateurEntity {
 
     @Basic
     @Column(name = "PrenRea")
+    @NotNull(groups = {ValidAjoutRealisateur.class, ValidModifRealisateur.class})
     public String getPrenRea() {
         return prenRea;
     }
     public void setPrenRea(String prenRea) {
         this.prenRea = prenRea;
     }
+
+    @Basic
+    @Column(name = "image")
+    @NotNull(groups = {ValidAjoutRealisateur.class, ValidModifRealisateur.class})
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 
     @Override
     public boolean equals(Object o) {
@@ -66,6 +85,7 @@ public class RealisateurEntity {
 
     @OneToMany(mappedBy = "realisateur", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("realisateur-film")
+    @Null(groups = {ValidSuppressionRealisateur.class, ValidAjoutRealisateur.class, ValidModifRealisateur.class})
     public Collection<FilmEntity> getFilms() {
         return films;
     }

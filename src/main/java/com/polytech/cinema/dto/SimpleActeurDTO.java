@@ -12,12 +12,14 @@ public class SimpleActeurDTO {
     private String prenAct;
     private Date dateNaiss;
     private Date dateDeces;
+    private String image;
 
     public int getNoAct() { return noAct; }
     public String getNomAct() { return nomAct; }
     public String getPrenAct() { return prenAct; }
     public Date getDateNaiss() { return dateNaiss; }
     public Date getDateDeces() { return dateDeces; }
+    public String getImage() { return image; }
 
     public SimpleActeurDTO(ActeurEntity acteur){
         noAct = acteur.getNoAct();
@@ -25,5 +27,6 @@ public class SimpleActeurDTO {
         prenAct = acteur.getPrenAct();
         dateNaiss = acteur.getDateNaiss();
         dateDeces = acteur.getDateDeces();
+        image = acteur.getImage();
     }
 }
