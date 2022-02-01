@@ -1,8 +1,9 @@
-# Cinema
+# Webservices - Projet Cinema - API
 
-Backend RESTful API
+Backend Spring-boot RESTful API
 
-Axel Gassion
-Simon Gaufreteau
-Yacine Hamdi
+### Auteurs :
+Axel Gassion \
+Simon Gaufreteau \
+Yacine Hamdi \
 Louis Pont
